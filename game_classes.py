@@ -4,7 +4,8 @@ import random as rand
 
 #The game class contains the game, it sets up the players and keeps track of the turns and who is playing and such.
 class Game(object):
-    def __init__(self,players_nr):
+    #Maybe rewrite init so that it creates the player selection menu instead and make this init what happens after
+    def __init__(self,players_nr): #Card set should also be an input
         self.garbage = Garbage()#This is easy, just empty from the start
         self.field = Field()#This should need some input, basically the cards we play with
 
@@ -161,28 +162,6 @@ class In_play(object):
         return [c.show() for c in self.cards]
 
 
-G = Game(4)
-print(G.p_turn,G.round)
-for _ in range(10):
-    G.end_turn()
-    print(G.p_turn,G.round)
-
-'''
-P1 = G.players['1']
-print(P1.hand)
-print(P1.deck.show())
-print(P1.hand.show())
-print(P1.discard_pile.show())
-P1.hand.redraw_hand(P1)
-print(P1.deck.show())
-print(P1.hand.show())
-print(P1.discard_pile.show())
-P1.hand.redraw_hand(P1)
-print(P1.deck.show())
-print(P1.hand.show())
-print(P1.discard_pile.show())
-'''
-
 #The cards that have been destroyed, should just be a collection that can do nothing
 class Garbage(object):
     def __init__(self):
@@ -204,5 +183,29 @@ class Field_pile(object):
     def __init__(self,type):
         self.amount = 0
         self.card = Card(type)
+
+"""
+G = Game(4)
+print(G.p_turn,G.round)
+for _ in range(10):
+    G.end_turn()
+    print(G.p_turn,G.round)
+
+
+P1 = G.players['1']
+print(P1.hand)
+print(P1.deck.show())
+print(P1.hand.show())
+print(P1.discard_pile.show())
+P1.hand.redraw_hand(P1)
+print(P1.deck.show())
+print(P1.hand.show())
+print(P1.discard_pile.show())
+P1.hand.redraw_hand(P1)
+print(P1.deck.show())
+print(P1.hand.show())
+print(P1.discard_pile.show())
+"""
+
 
 
