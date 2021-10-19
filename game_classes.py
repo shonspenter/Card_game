@@ -1,10 +1,13 @@
 #Tips from: https://www.youtube.com/watch?v=t8YkjDH86Y4&t=1s
 
 import random as rand
+import pygame
+import os
 
 #The game class contains the game, it sets up the players and keeps track of the turns and who is playing and such.
 class Game(object):
-    def __init__(self,players_nr):
+    #Maybe rewrite init so that it creates the player selection menu instead and make this init what happens after
+    def __init__(self,players_nr): #Card set should also be an input
         self.garbage = Garbage()#This is easy, just empty from the start
         self.field = Field()#This should need some input, basically the cards we play with
 
@@ -12,7 +15,7 @@ class Game(object):
         self.players = {}
         self.nr_players = players_nr
         for nr in range(players_nr):
-            self.players[str(nr)] = Player(self,nr)
+            self.players[nr] = Player(self,nr)
 
         self.game_start()
 
@@ -58,9 +61,14 @@ class Player(object):
 
 
 #The card class should just be a storage of the cards maybe also what happens when you play it? (Maybe use switch statement for that in newest python version)
-class Card(object):
+class Card(pygame.sprite.Sprite):
     def __init__(self,type):
+        pygame.sprite.Sprite.__init__(self)
+        Card_Path = "Assets/Cards/"
         self.type = type
+        self.path = os.path.abspath(f"{Card_Path}{type}.jpg")
+        self.image = pygame.image.load(self.path)
+        self.rect = self.image.get_rect()
 
     def play(self,player):
         print(self.type)
@@ -77,7 +85,7 @@ class Deck(object):
         self.build()
 
     def build(self): #Could add set keyword for different starting sets
-        start_cards = [Card("Estate"),Card("copper")]
+        start_cards = [Card("Estate"),Card("Copper")]
         number_cards = [3,7]
         starting_deck = []
         for i,n in enumerate(start_cards):
@@ -161,28 +169,6 @@ class In_play(object):
         return [c.show() for c in self.cards]
 
 
-G = Game(4)
-print(G.p_turn,G.round)
-for _ in range(10):
-    G.end_turn()
-    print(G.p_turn,G.round)
-
-'''
-P1 = G.players['1']
-print(P1.hand)
-print(P1.deck.show())
-print(P1.hand.show())
-print(P1.discard_pile.show())
-P1.hand.redraw_hand(P1)
-print(P1.deck.show())
-print(P1.hand.show())
-print(P1.discard_pile.show())
-P1.hand.redraw_hand(P1)
-print(P1.deck.show())
-print(P1.hand.show())
-print(P1.discard_pile.show())
-'''
-
 #The cards that have been destroyed, should just be a collection that can do nothing
 class Garbage(object):
     def __init__(self):
@@ -204,5 +190,29 @@ class Field_pile(object):
     def __init__(self,type):
         self.amount = 0
         self.card = Card(type)
+
+'''
+G = Game(4)
+print(G.p_turn,G.round)
+for _ in range(10):
+    G.end_turn()
+    print(G.p_turn,G.round)
+
+
+P1 = G.players[1]
+print(P1.hand)
+print(P1.deck.show())
+print(P1.hand.show())
+print(P1.discard_pile.show())
+P1.hand.redraw_hand(P1)
+print(P1.deck.show())
+print(P1.hand.show())
+print(P1.discard_pile.show())
+P1.hand.redraw_hand(P1)
+print(P1.deck.show())
+print(P1.hand.show())
+print(P1.discard_pile.show())
+'''
+
 
 
