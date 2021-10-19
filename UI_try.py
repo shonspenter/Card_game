@@ -18,9 +18,24 @@ class Game_window(object):
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+                window.close()
                 break
             self.game = Game(int(event))
-            break
+            window.close()
+            self.Game_screen()
+            
+        
+        #Something that should happen after all windows close here
+    
+    def Game_screen(self):
+        layout = [  [sg.Text('Game!')],
+                    [sg.Button('Cancel')]]
+        window = sg.Window('Dominion', layout)
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+                window.close()
+                break
 
         window.close()
 
