@@ -64,9 +64,10 @@ class Player(object):
 class Card(pygame.sprite.Sprite):
     def __init__(self,type):
         pygame.sprite.Sprite.__init__(self)
+        dir_path = os.path.dirname(os.path.realpath(__file__))  #probably define somewhere else, but for now here is fine
         Card_Path = "Assets/Cards/"
         self.type = type
-        self.path = os.path.abspath(f"{Card_Path}{type}.jpg")
+        self.path = os.path.abspath(f"{dir_path}/{Card_Path}{type}.jpg")
         self.image = pygame.image.load(self.path)
         self.rect = self.image.get_rect()
 
